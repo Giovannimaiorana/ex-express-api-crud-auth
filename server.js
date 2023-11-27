@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const postsRouter = require("./routers/postsRouter");
+const authRouter = require("./routers/authRouter");
 const routeNotFound = require("./middlewares/routeNotFound");
 
 
@@ -13,6 +14,7 @@ app.use(express.json());
 
 
 app.use("/posts", postsRouter);
+app.use("/", authRouter);
 
 app.use(routeNotFound);
 
