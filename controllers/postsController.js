@@ -125,6 +125,10 @@ async function show(req, res) {
 
 //funzione per modifica 
 async function update(req, res) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
     const dbSlug = req.params.slug;
     const updateData = req.body;
     console.log(dbSlug);

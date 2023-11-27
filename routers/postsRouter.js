@@ -28,6 +28,7 @@ router.get('/:slug',
     postsController.show);
 // validazioni da fare su eotta update    
 router.put('/:slug',
+    param("slug").isLength({ min: 2 }).withMessage("Lo slug deve essere lungo almeno 2 caratteri"),
     body('title').optional().isString().withMessage('Il titolo deve essere una stringa'),
     body('content').optional().isString().withMessage('Il contenuto deve essere una stringa'),
     body('published').optional().isBoolean().withMessage('Il campo "published" deve essere un booleano'),
