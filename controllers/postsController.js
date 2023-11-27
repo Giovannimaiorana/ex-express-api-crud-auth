@@ -79,6 +79,7 @@ async function store(req, res) {
     const uniqueCategorySlug = await generateUniqueSlug(categotySlug);
     const uniqueSlug = await generateUniqueSlug(baseSlug);
 
+
     const newPost = await prisma.post.create({
         data: {
             title: insertData.title,

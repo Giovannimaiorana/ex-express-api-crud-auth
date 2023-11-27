@@ -3,6 +3,7 @@ const router = express.Router();
 const postsController = require('../controllers/postsController');
 const routeNotFound = require("../middlewares/routeNotFound");
 const { body, param, query } = require('express-validator');
+const permAuth = require('../middlewares/permAuth');
 
 //validazioni fatte su rotta index 
 router.get('/',
@@ -12,6 +13,7 @@ router.get('/',
 
 //validazioni fatte su rotta store 
 router.post('/',
+    permAuth,
     body("title").notEmpty().withMessage("devi inserire il titolo"),
     body("image").optional(),
     body("content").notEmpty().withMessage("devi inserire la descrizione"),
@@ -21,6 +23,7 @@ router.post('/',
     postsController.store);
 //validazioni fatte su rotta show
 router.get('/:slug',
+    permAuth,
     param("slug").isLength({ min: 2 }).withMessage("Lo slug deve essere lungo almeno 2 caratteri").isLength({ max: 50 }).withMessage("Lo slug  non deve superare i 50 caratteri"),
     postsController.show);
 // validazioni da fare su eotta update    
@@ -31,6 +34,7 @@ router.put('/:slug',
     postsController.update);
 //validazioni fatte su rotta delete 
 router.delete('/:slug',
+    permAuth,
     param("slug").isLength({ min: 2 }).withMessage("Lo slug deve essere lungo almeno 2 caratteri").isLength({ max: 50 }).withMessage("Lo slug  non deve superare i 50 caratteri"),
     postsController.destroy);
 
