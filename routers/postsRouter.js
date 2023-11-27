@@ -18,8 +18,8 @@ router.post('/',
     body("image").optional(),
     body("content").notEmpty().withMessage("devi inserire la descrizione"),
     body("published").isBoolean().optional().withMessage("deve essere un booleano"),
-    body("name").notEmpty().withMessage("devi inserire il nome della category"),
-    body("titleT").notEmpty().withMessage("devi inserire il nome dei tags"),
+    body("categoryId"),
+    body("tags"),
     postsController.store);
 //validazioni fatte su rotta show
 router.get('/:slug',

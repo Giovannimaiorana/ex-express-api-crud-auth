@@ -74,10 +74,11 @@ async function store(req, res) {
         return res.status(400).json({ errors: errors.array() });
     }
     const insertData = req.body;
+    console.log('Insert Data:', insertData);
     const baseSlug = kebabCase(insertData.title);
-    const categotySlug = kebabCase(insertData.name);
-    const uniqueCategorySlug = await generateUniqueSlug(categotySlug);
+
     const uniqueSlug = await generateUniqueSlug(baseSlug);
+    console.log(uniqueCategorySlug);
 
 
     const newPost = await prisma.post.create({
@@ -87,17 +88,11 @@ async function store(req, res) {
             image: insertData.image,
             content: insertData.content,
             published: insertData.published,
-            category: {
-                create: {
-                    name: insertData.name,
-                    slug: uniqueCategorySlug
-                }
-            },
+            categoryId: insertData.categoryId,
             tags: {
-                create: {
-                    titleT: insertData.titleT
-                }
-            },
+                connect: insertData.tags.map((tagId) => ({ id: tagId }))
+            }
+
         },
         include: {
             category: true,
@@ -188,6 +183,8 @@ module.exports = {
     store,
     show,
     update,
-    destroy
+    destroy,
+    isSlugExists,
+    generateUniqueSlug,
 
 }
