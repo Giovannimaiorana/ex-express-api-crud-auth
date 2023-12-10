@@ -15,13 +15,16 @@ dotenv.config();
 
 app.use(express.json());
 
-
 app.use(cors());
+//app.use(cors());
 app.use("/posts", postsRouter);
-app.use("/categories", categoriesRouter);
-app.use("/tags", tagsRouter);
+app.use("/", categoriesRouter);
+app.use("/", tagsRouter);
 app.use("/", authRouter);
 
+
+
+//app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(routeNotFound);
 
 app.listen(port, () => {

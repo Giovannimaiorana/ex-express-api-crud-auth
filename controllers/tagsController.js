@@ -1,6 +1,16 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+async function index(req, res) {
+    try {
+        const tags = await prisma.tag.findMany();
+        res.json(tags);
+    } catch (error) {
+        console.error('Errore durante il recupero dei tag:', error);
+        res.status(500).json({ error: 'Errore durante il recupero dei tag' });
+    }
+}
+
 
 async function store(req, res) {
 
@@ -19,5 +29,6 @@ async function store(req, res) {
 
 
 module.exports = {
+    index,
     store
 }

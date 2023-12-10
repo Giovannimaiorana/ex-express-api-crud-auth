@@ -11,6 +11,16 @@ async function isSlugExists(slug) {
 
     return existingSlug !== null;
 }
+
+async function index(req, res) {
+    try {
+        const categories = await prisma.category.findMany();
+        res.json(categories);
+    } catch (error) {
+        console.error('Errore durante il recupero dei tag:', error);
+        res.status(500).json({ error: 'Errore durante il recupero dei tag' });
+    }
+}
 //genera uno slug univoco con counter vicino se già presente 
 async function generateUniqueSlug(baseSlug) {
     let slug = baseSlug;
@@ -43,5 +53,6 @@ async function store(req, res) {
     return res.json(newCategory);
 }
 module.exports = {
+    index,
     store
 }
